@@ -10,6 +10,7 @@ import { SignupComponent } from './signup/signup.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     SignupComponent,
     UpdateProfileComponent,
     ForgotPasswordComponent,
-    HomepageComponent
+    HomepageComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
