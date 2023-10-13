@@ -1,0 +1,17 @@
+<div class="update-profile-container">
+  <h2>Update Profile Data</h2>
+  <form (submit)="updateProfile()">
+    <div class="form-group">
+      <label for="profilePicture">Profile Picture:</label>
+      <input type="file" id="profilePicture" name="profilePicture" />
+    </div>
+
+    <div class="form-group">
+      <label for="bio">Bio:</label>
+      <textarea id="bio" name="bio" [(ngModel)]="bio" rows="4" maxlength="200"></textarea>
+    </div>
+
+    <button type="submit" routerLink="/homepage">Update</button>
+    <button type="button" routerLink="/homepage">Skip</button>
+  </form>
+</div>
