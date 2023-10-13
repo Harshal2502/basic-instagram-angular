@@ -1,0 +1,25 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form (submit)="login()">
+    
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username" required
+        [style.border]="err1 ? '1px solid red' : ''" (input)="onUsernameInput()" />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password"
+        [style.border]="err2 ? '1px solid red' : ''" required (input)="onPasswordInput()" />
+    </div>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <div class="link-container">
+    <a routerLink="/signup">Signup</a>
+    <a routerLink="/forgot-password">Forgot Password</a>
+  </div>
+</div>
