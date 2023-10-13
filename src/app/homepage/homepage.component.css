@@ -102,3 +102,44 @@
     padding: 0px 4px;
     border-radius: 50%;
   }
+
+  /* MEDIA QUERIES */
+
+  @media screen and (max-width: 900px) {
+    .side-panel {
+      display: none;
+    }
+
+    .stories {
+      width: auto;
+    }
+
+    .targetDiv {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+  }
+  
+  @media screen and (max-width: 650px) {
+
+    .hide1, .hide2{
+      display: none;
+    }
+
+  }
+
+  @media screen and (max-width: 450px) {
+
+    .hide3{
+      display: none;
+    }
+
+    .main-content {
+      padding: 0 2rem;
+    }
+    
+
+  }
