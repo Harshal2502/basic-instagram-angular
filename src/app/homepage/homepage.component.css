@@ -12,7 +12,7 @@
     padding: 1rem;
     align-items: center;
     width: 100%;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     margin: 20px 0;
 
     -moz-user-select: none; 

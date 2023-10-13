@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class PostComponent {
     @Input() postImage: string = '';
     @Input() username: string = '';
-    @Input() likes: string = '';
+    @Input() likes: number = 0;
     @Input() desc: string = '';
     @Input() time: string = '';
     @Input() index: boolean = false;
@@ -24,6 +24,8 @@ export class PostComponent {
       }
 
     toggleLike() {
+        if(this.isLiked)this.likes--;
+        else this.likes++;
         this.isLiked = !this.isLiked;
     }
     toggleSave() {
