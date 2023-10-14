@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent {
+  showSidebar: boolean = false;
 
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+  }
 }

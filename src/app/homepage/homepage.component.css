@@ -1,145 +1,237 @@
 .homepage-container {
-    display: flex;
-    /* justify-content: start; */
-    max-width: 1200px;
-    margin: 0 auto;
-    /* padding: 20px; */
+  display: flex;
+  /* justify-content: start; */
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 20px; */
+}
+
+.stories {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  align-items: center;
+  width: 100%;
+  /* overflow-x: scroll; */
+  margin: 20px 0;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+}
+
+.story {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(
+        45deg,
+        #ff69b4 5%,
+        #f99c4a 15%,
+        #f47838 30%,
+        #e75157 45%,
+        #d92d7a 70%,
+        #cc2a92 80%,
+        #c32e92 95%
+      )
+      border-box;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  margin: 0 5px;
+  overflow: hidden;
+}
+
+.story img {
+  width: 95%;
+  height: 95%;
+  padding: 2px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.main-content {
+  flex: 1;
+  padding: 0 5rem;
+  display: flex;
+}
+
+.side-panel {
+  width: 22%;
+  padding: 10px;
+  position: sticky;
+  top: 20px;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.new-feeds {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  /* text-align: center; */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+}
+
+ul li {
+  margin: 2rem 2rem 2rem 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+li span {
+  padding-left: 16px;
+}
+
+.desc3 {
+  padding: 3px 0px 0px 10px;
+  font-size: smaller;
+}
+
+.unread::after {
+  content: "3";
+  position: relative;
+  top: -13px;
+  right: 12px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 0px 4px;
+  border-radius: 50%;
+}
+
+.hamburger-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding-right: 20px;
+  /* position: absolute; */
+  /* top: 10px; */
+  /* left: 10px; */
+  z-index: 1;
+}
+
+.side-panel-2 {
+  width: 250px;
+  background-color: white;
+  width: 100%;
+  /* height: 100%; */
+  padding: 10px;
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+  position: fixed;
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+.show-sidebar {
+  display: unset !important;
+}
+
+/* Styles for the header */
+.header {
+  position: fixed;
+  background-color: white;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (min-width: 768px) {
+  /* .side-panel {
+    display: block;
+  } */
+  .side-panel-2 {
+    display: none;
   }
-  
+
+  .hamburger-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .side-panel-2 {
+    display: none;
+  }
+
+  .targetDiv {
+    margin-top: 4rem !important;
+  }
+
   .stories {
-    display: flex;
-    flex-direction: row;
-    padding: 1rem;
-    align-items: center;
-    width: 100%;
-    /* overflow-x: scroll; */
-    margin: 20px 0;
+    margin: 0;
+  }
+}
 
-    -moz-user-select: none; 
-    -webkit-user-select: none; 
-    -ms-user-select:none; 
-    user-select:none;
-    -o-user-select:none;
-  }
-  
-  .story {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(white, white) padding-box,
-    linear-gradient(45deg, #ff69b4 5%, #f99c4a 15%, #f47838 30%, #e75157 45%, #d92d7a 70%, #cc2a92 80%, #c32e92 95%) border-box;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    margin: 0 5px;
-    overflow: hidden;
-  }
-  
-  .story img {
-    width: 95%;
-    height: 95%;
-    padding: 2px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 0 5rem;
-    display: flex;
-  }
-  
+@media screen and (max-width: 900px) {
   .side-panel {
-    width: 22%;
-    padding: 10px;
-    position: sticky;
-    top: 20px;
-    height: 90vh;
-    overflow: hidden;
+    display: none;
   }
-  
-  .new-feeds {
-    flex: 1;
+  .targetDiv {
+    margin-top: 2rem;
+  }
+
+  .stories {
+    width: auto;
+  }
+
+  .hamburger-button {
+    display: block;
+  }
+
+  .targetDiv {
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding-left: 0;
-    /* text-align: center; */
-    -moz-user-select: none; 
-    -webkit-user-select: none; 
-    -ms-user-select:none; 
-    user-select:none;
-    -o-user-select:none;
-  }
-
-  ul li{
-    margin: 2rem 2rem 2rem 0;
-    display: flex;
     align-items: center;
-    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .header {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .hide1,
+  .hide2 {
+    display: none;
   }
 
-  li span {
-    padding-left: 16px;
+  .main-content {
+    padding: 0;
   }
-  
-  .desc3 {
-    padding: 3px 0px 0px 10px;
-    font-size: smaller;
+}
+
+@media screen and (max-width: 450px) {
+  .hide3 {
+    display: none;
   }
-
-  .unread::after {
-    content: "3";
-    position: relative;
-    top: -13px;
-    right: 12px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    padding: 0px 4px;
-    border-radius: 50%;
-  }
-
-  /* MEDIA QUERIES */
-
-  @media screen and (max-width: 900px) {
-    .side-panel {
-      display: none;
-    }
-
-    .stories {
-      width: auto;
-    }
-
-    .targetDiv {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-  }
-  
-  @media screen and (max-width: 650px) {
-
-    .hide1, .hide2{
-      display: none;
-    }
-
-  }
-
-  @media screen and (max-width: 450px) {
-
-    .hide3{
-      display: none;
-    }
-
-    .main-content {
-      padding: 0 2rem;
-    }
-    
-
-  }
+}

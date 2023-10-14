@@ -57,7 +57,7 @@ export class SignupComponent {
       return;
     }
 
-    this.router.navigate(['/homepage']);
+    this.router.navigate(['/update-profile']);
 
   }
 

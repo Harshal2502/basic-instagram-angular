@@ -1,11 +1,30 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D, #F56040, #F77737, #FCAF45, #FFDC80);
+}
+
+
 .update-profile-container {
-    max-width: 30rem;
-    margin: 0 auto;
+    height: 20rem;
+    width: 100%;
+    max-width: 65vh;
+    margin: 5px auto;
     padding: 20px;
-    /* border: 1px solid #ccc;
-    border-radius: 5px; */
+    border: 1px solid #ccc;
+    border-radius: 5px;
     background-color: #fff;
-    box-shadow: 0 0 10p/x rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
   
