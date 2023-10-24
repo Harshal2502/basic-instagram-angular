@@ -32,24 +32,21 @@ export class LoginComponent {
 
       try {
         const res = await this.API.login(this.username, this.password);
-        // console.log(res);
+        console.log(res);
 
-        if(res.status != 201) {
-          alert("Invalid Credentials");
-          return;
-        }
-
-        if(res.status == 201) {
-          this.cookies.set('authtoken', res.data.authToken);
-          this.cookies.set('userid', res.data.userId);
-          this.cookies.set('refreshToken', res.data.refreshToken);
+        if(res?.userId !== null) {
+          this.cookies.set('authtoken', res.authToken);
+          this.cookies.set('userid', res.userId);
+          this.cookies.set('refreshToken', res.refreshToken);
           
           this.router.navigate(['/homepage']);
         }
       }
 
-      catch (err) {
+      catch (err: any) {
         console.log(err);
+        if(err.status === 400)alert("User does not exist");
+        if(err.status === 401)alert("Re-check username or password");
       }
 
     }

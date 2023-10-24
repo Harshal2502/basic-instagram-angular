@@ -29,17 +29,22 @@ export class SignupComponent {
   constructor(private router: Router, private API: ApiService) {}
 
   async signup() {
+
     if (!this.validateUsername(this.username)) {
       alert('invalid username');
       return;
-    } else {
+    } 
+    
+    else {
+      
       try {
-        const res = await this.API.validUsername(this.username);
+        const res = this.API.validUsername(this.username);
 
-        if (res.status != 200) {
+        if (res === null) {
           alert('Username not available');
           return;
         }
+
       } catch (err) {
         console.log('VALIDATE USERNAME API CALL: ' + err);
       }
@@ -73,8 +78,12 @@ export class SignupComponent {
     this.otpBool = !this.otpBool;
 
     const res = await this.API.generateOTP(this.email);
-    console.log(res);
+    if(res.status !== 200){
+      alert("An error occured");
+      return;
+    }
 
+    console.log("Proceed!");
   }
 
   async validateOTP() {
@@ -93,9 +102,36 @@ export class SignupComponent {
       console.log(res1);
 
       if(res1.status === 201) {
+
+        /*
+        
+          try {
+        const res = await this.API.login(this.username, this.password);
+        console.log(res);
+
+        if(res?.userId !== null) {
+          this.cookies.set('authtoken', res.authToken);
+          this.cookies.set('userid', res.userId);
+          this.cookies.set('refreshToken', res.refreshToken);
+          
+          this.router.navigate(['/homepage']);
+        }
+      }
+
+      catch (err: any) {
+        console.log(err);
+        if(err.status === 400)alert("User does not exist");
+        if(err.status === 401)alert("Re-check username or password");
+      }
+
+        */
+
         this.router.navigate(['/update-profile']);
         return;
       } 
+
+
+
     }
 
   }

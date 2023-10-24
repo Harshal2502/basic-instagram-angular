@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import axios from 'axios';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -49,28 +50,22 @@ export class ApiService {
 
   async validUsername(username: string) {
 
-    try {
-      const queryParams = {
-        username: username
-      };
-
-      const config = {
-        params: queryParams,
-        withCredentials: true,
-      };
-
-      const response = await axios.get(`${this.baseUrl}/users/isvalidusername`, config);
-
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    this.http.get(
+      `${this.baseUrl}/users/isvalidusername?username=${username}`
+    ).subscribe(
+      res => {
+        console.log(res)
+      }, error => {
+        console.log(error)
+      }
+    )
+    
   }
-  
+
   async generateOTP (email: string) {
 
     try {
-      const response = await axios.post(`${this.baseUrl}/`, 
+      const response = await axios.post(`${this.baseUrl}/otp/generate`, 
         {
           "contactInfo": {
             "email": email,
@@ -85,10 +80,10 @@ export class ApiService {
     }
   }
   
-  async validateOTP (email: string, otp:any = 123456) {
+  async validateOTP (email: string, otp:any) {
 
     try {
-      const response = await axios.post(`${this.baseUrl}/`,  
+      const response = await axios.post(`${this.baseUrl}/otp/validate`,  
         {
           "contactInfo": {
             "email": email,
@@ -98,14 +93,14 @@ export class ApiService {
         }
       );
 
-      return response.data;
+      return response;
     } catch (error) {
       throw error;
     }
   }
   
   
-  async signup (username: string, email: string, password: any, transactionId: any) {
+  async signup (username: string, password: any, email: string, transactionId: any) {
 
     try {
       const response = await axios.post(`${this.baseUrl}/users/signup`, 
