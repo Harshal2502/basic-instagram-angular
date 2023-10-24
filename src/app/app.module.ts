@@ -11,8 +11,6 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PostComponent } from './post/post.component';
-import { HttpClientModule } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service'; 
 
 @NgModule({
   declarations: [
@@ -27,11 +25,10 @@ import { CookieService } from 'ngx-cookie-service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     FontAwesomeModule,
   ],
-  providers: [CookieService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
