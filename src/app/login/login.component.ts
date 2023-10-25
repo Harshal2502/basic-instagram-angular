@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api-service.service';
 import { CookieService } from 'ngx-cookie-service'; 
+import { ToastService } from '../toast-service.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent {
   err1: Boolean = false;
   err2: Boolean = false;
 
-  constructor(private router: Router, private API: ApiService, private cookies: CookieService) { }
+  constructor(private router: Router, private API: ApiService, private cookies: CookieService, private toast: ToastService) { }
 
   async login() {
 
@@ -44,9 +45,8 @@ export class LoginComponent {
       }
 
       catch (err: any) {
-        console.log(err);
-        if(err.status === 400)alert("User does not exist");
-        if(err.status === 401)alert("Re-check username or password");
+        if(err.status === 400)this.toast.showInfo("User does not exist");
+        if(err.status === 401)this.toast.showInfo("Wrong Password");
       }
 
     }

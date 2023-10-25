@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api-service.service';
+import { ToastService } from '../toast-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-signup',
@@ -8,7 +10,6 @@ import { ApiService } from '../api-service.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-
   username: string = '';
   password: string = '';
   confirmPassword: string = '';
@@ -26,27 +27,32 @@ export class SignupComponent {
   c: boolean = false;
   d: boolean = false;
 
-  constructor(private router: Router, private API: ApiService) {}
+  constructor(
+    private router: Router,
+    private API: ApiService,
+    private toast: ToastService,
+    private cookies: CookieService
+  ) {}
 
   async signup() {
-
     if (!this.validateUsername(this.username)) {
-      alert('invalid username');
+      this.toast.showInfo('invalid username');
       return;
-    } 
-    
-    else {
-      
+    } else {
       try {
-        const res = this.API.validUsername(this.username);
+        const res = await this.API.validUsername(this.username);
+        console.log(res);
 
-        if (res === null) {
-          alert('Username not available');
+        if (res.status === null) {
+          this.toast.showInfo('Username not available');
           return;
         }
-
-      } catch (err) {
-        console.log('VALIDATE USERNAME API CALL: ' + err);
+      } catch (err: any) {
+        this.toast.showInfo(err.response.data.message);
+        if (err.response.status !== 200) {
+          this.toast.showInfo('Username not available');
+          return;
+        }
       }
     }
 
@@ -55,85 +61,80 @@ export class SignupComponent {
     }
 
     if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match');
+      this.toast.showInfo('Passwords do not match');
       return;
     }
 
     if (this.fullName.length >= 50) {
-      alert('max length of fullname should be 50');
+      this.toast.showInfo('max length of fullname should be 50');
       return;
     }
 
     const fullNamePattern = /^[A-Za-z\s]+$/;
     if (!fullNamePattern.test(this.fullName)) {
-      alert('Full Name can only contain letters and spaces.');
+      this.toast.showInfo('Full Name can only contain letters and spaces.');
       return;
     }
 
     if (this.phoneNumber === '' && this.email === '') {
-      alert('Phone numer or Email is required');
+      this.toast.showInfo('Phone numer or Email is required');
+      return;
+    }
+
+    const res = await this.API.generateOTP(this.email);
+    if (res.status !== 200) {
+      this.toast.showInfo('An error occured');
       return;
     }
 
     this.otpBool = !this.otpBool;
-
-    const res = await this.API.generateOTP(this.email);
-    if(res.status !== 200){
-      alert("An error occured");
-      return;
-    }
-
-    console.log("Proceed!");
   }
 
   async validateOTP() {
-    if(this.otp == '')  {
-      alert("Enter OTP to Proceed");
+    if (this.otp == '') {
+      this.toast.showInfo('Enter OTP to Proceed');
       return;
     }
 
-    const res = await this.API.validateOTP(this.email, this.otp);
-    console.log(res);
-    
-    if(res.status === 200) {
-      const transactionId = res.data.transactionId;
+    try {
+      const res = await this.API.validateOTP(this.email, this.otp);
+      console.log(res);
 
-      const res1 = await this.API.signup(this.username, this.password, this.email, transactionId);
-      console.log(res1);
+      if (res.status === 200) {
+        const transactionId = res.data.transactionId;
 
-      if(res1.status === 201) {
+        const res1 = await this.API.signup(
+          this.username,
+          this.password,
+          this.email,
+          transactionId
+        );
 
-        /*
-        
+        if (res1.status === 201) {
           try {
-        const res = await this.API.login(this.username, this.password);
-        console.log(res);
+            const res = await this.API.login(this.username, this.password);
+            console.log(res);
 
-        if(res?.userId !== null) {
-          this.cookies.set('authtoken', res.authToken);
-          this.cookies.set('userid', res.userId);
-          this.cookies.set('refreshToken', res.refreshToken);
-          
-          this.router.navigate(['/homepage']);
+            if (res?.userId !== null) {
+              this.cookies.set('authtoken', res.authToken);
+              this.cookies.set('userid', res.userId);
+              this.cookies.set('refreshToken', res.refreshToken);
+
+              this.router.navigate(['/homepage']);
+            }
+          } catch (err: any) {
+            if (err.status !== 200)this.toast.showInfo('Please login to continue');
+            this.router.navigate(['/login']);
+          }
+
+          this.toast.showInfo('Registered Successfully!');
+          this.router.navigate(['/update-profile']);
+          return;
         }
       }
-
-      catch (err: any) {
-        console.log(err);
-        if(err.status === 400)alert("User does not exist");
-        if(err.status === 401)alert("Re-check username or password");
-      }
-
-        */
-
-        this.router.navigate(['/update-profile']);
-        return;
-      } 
-
-
-
+    } catch (err: any) {
+      this.toast.showInfo(err.response.data);
     }
-
   }
 
   validateUsername(username: string): boolean {
@@ -159,7 +160,7 @@ export class SignupComponent {
     if (!isLengthValid)
       this.alertStr += 'more than 8 and less than 30 characters';
 
-    alert(`Password must contain ${this.alertStr}`);
+    this.toast.showInfo(`Password must contain ${this.alertStr}`);
     return false;
   }
 

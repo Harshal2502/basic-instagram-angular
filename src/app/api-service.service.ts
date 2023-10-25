@@ -50,16 +50,13 @@ export class ApiService {
 
   async validUsername(username: string) {
 
-    this.http.get(
-      `${this.baseUrl}/users/isvalidusername?username=${username}`
-    ).subscribe(
-      res => {
-        console.log(res)
-      }, error => {
-        console.log(error)
-      }
-    )
-    
+    try {
+      const response = await axios.get(`${this.baseUrl}/users/isvalidusername?username=${username}`);
+      return response;
+    }
+    catch (err) {
+      throw err;
+    }    
   }
 
   async generateOTP (email: string) {
