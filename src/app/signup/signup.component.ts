@@ -123,7 +123,8 @@ export class SignupComponent {
               this.router.navigate(['/homepage']);
             }
           } catch (err: any) {
-            if (err.status !== 200)this.toast.showInfo('Please login to continue');
+            if (err.status !== 200)
+              this.toast.showInfo('Please login to continue');
             this.router.navigate(['/login']);
           }
 
