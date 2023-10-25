@@ -41,7 +41,6 @@ export class SignupComponent {
     } else {
       try {
         const res = await this.API.validUsername(this.username);
-        console.log(res);
 
         if (res.status === null) {
           this.toast.showInfo('Username not available');
@@ -98,7 +97,6 @@ export class SignupComponent {
 
     try {
       const res = await this.API.validateOTP(this.email, this.otp);
-      console.log(res);
 
       if (res.status === 200) {
         const transactionId = res.data.transactionId;
@@ -113,7 +111,6 @@ export class SignupComponent {
         if (res1.status === 201) {
           try {
             const res = await this.API.login(this.username, this.password);
-            console.log(res);
 
             if (res?.userId !== null) {
               this.cookies.set('authtoken', res.authToken);

@@ -37,7 +37,6 @@ export class LoginComponent {
 
       try {
         const res = await this.API.login(this.username, this.password);
-        console.log(res);
 
         if (res?.userId !== null) {
           this.cookies.set('authtoken', res.authToken);
