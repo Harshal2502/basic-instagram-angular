@@ -27,26 +27,26 @@ export class ApiService {
     }
   }
 
-  async EXAMPLE_REQUEST_FOR_HEADERS() {
+  // async EXAMPLE_REQUEST_FOR_HEADERS() {
 
-    try {
-      const authToken = this.cookieService.get('authtoken');
-      const userId = this.cookieService.get('userid');
+  //   try {
+  //     const authToken = this.cookieService.get('authtoken');
+  //     const userId = this.cookieService.get('userid');
 
-      const headers = {
-        Authorization: `Bearer ${authToken}`,
-        'User-Id': userId,
-      };
+  //     const headers = {
+  //       Authorization: `Bearer ${authToken}`,
+  //       'User-Id': userId,
+  //     };
 
-      const response = await axios.get(`API_ENDPOINT`, {
-        headers,
-      });
+  //     const response = await axios.get(`API_ENDPOINT`, {
+  //       headers,
+  //     });
 
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
+  //     return response;
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  // }
 
   async validUsername(username: string) {
 

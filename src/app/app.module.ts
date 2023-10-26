@@ -28,9 +28,9 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
     FontAwesomeModule,
     ToastrModule.forRoot({
@@ -39,7 +39,7 @@ import { ToastrModule } from 'ngx-toastr';
       preventDuplicates: true,
     }),
   ],
-  providers: [CookieService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

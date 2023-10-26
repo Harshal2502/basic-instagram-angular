@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   username: string = '';
@@ -15,9 +15,9 @@ export class SignupComponent {
   confirmPassword: string = '';
   fullName: string = '';
   phoneNumber: string = '';
-  otp: string = '';
   email: string = '';
   alertStr: string = '';
+  otp: string = '';
   score: number = 0;
   passwordCheck: boolean = false;
   otpBool: boolean = false;
@@ -68,7 +68,7 @@ export class SignupComponent {
       this.toast.showInfo('max length of fullname should be 50');
       return;
     }
-
+    
     const fullNamePattern = /^[A-Za-z\s]+$/;
     if (!fullNamePattern.test(this.fullName)) {
       this.toast.showInfo('Full Name can only contain letters and spaces.');
@@ -136,21 +136,22 @@ export class SignupComponent {
   }
 
   validateUsername(username: string): boolean {
+    
     const usernamePattern = /^[a-z_]{1,20}$/;
     return usernamePattern.test(username);
   }
 
   validatePassword(password: string): boolean {
+    
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasSpecialChar = /[!@#\$%\^&\*]/.test(password);
     const isLengthValid = password.length >= 8 && password.length <= 30;
 
-    this.passwordCheck =
-      hasUppercase && hasLowercase && hasSpecialChar && isLengthValid;
-    if (this.passwordCheck) return true;
+    this.passwordCheck = hasUppercase && hasLowercase && hasSpecialChar && isLengthValid;
+    if(this.passwordCheck)return true;
 
-    this.alertStr = '';
+    this.alertStr = "";
 
     if (!hasUppercase) this.alertStr += 'an Uppercase character, ';
     if (!hasLowercase) this.alertStr += 'a Lowercase character, ';
@@ -163,8 +164,9 @@ export class SignupComponent {
   }
 
   calculatePasswordStrength(event: any) {
+  
     const password = event.target.value;
-    if (password == '') {
+    if(password == ''){
       this.score = 0;
       this.a = false;
       this.b = false;
@@ -176,7 +178,7 @@ export class SignupComponent {
       this.score += 25;
       this.a = true;
     }
-
+    
     if (/[a-z]/.test(password) && !this.b) {
       this.score += 25;
       this.b = true;
@@ -189,7 +191,7 @@ export class SignupComponent {
       this.score += 25;
       this.d = true;
     }
-
+  
     if (this.score > 100) {
       this.score = 100;
     }
