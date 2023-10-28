@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api-service.service';
 import { ToastService } from '../services/toast-service.service';
-import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../services/loginservice.service';
 import { SignupService } from '../services/signup.service';
 import { OtpService } from '../services/otp.service';
 import { USER_ALERTS } from '../utils/constants';
+import { CookiesService } from '../coockies.service';
 
 @Component({
   selector: 'app-signup',
@@ -35,7 +35,7 @@ export class SignupComponent {
     private router: Router,
     private API: ApiService,
     private toast: ToastService,
-    private cookies: CookieService,
+    private cookies: CookiesService,
     private loginService: LoginService,
     private signupService: SignupService,
     private otpService: OtpService
@@ -85,9 +85,9 @@ export class SignupComponent {
       const res = await this.loginService.login(this.username, this.password);
 
       if (res?.userId !== null) {
-        this.cookies.set('authtoken', res.authToken);
-        this.cookies.set('userid', res.userId);
-        this.cookies.set('refreshToken', res.refreshToken);
+        this.cookies.setAuthToken(res.authToken);
+        this.cookies.setUserId(res.userId);
+        this.cookies.setRefreshToken(res.refreshToken);
       }
     } catch (err: any) {
       if (err.status !== 200) this.toast.showInfo(USER_ALERTS.LOGIN);

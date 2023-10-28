@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { ToastService } from '../services/toast-service.service';
 import { LoginService } from '../services/loginservice.service';
 import { USER_ALERTS } from '../utils/constants';
+import { CookiesService } from '../coockies.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private cookies: CookieService,
+    private cookies: CookiesService,
     private toast: ToastService
   ) {}
 
@@ -39,14 +39,15 @@ export class LoginComponent {
         const res = await this.loginService.login(this.username, this.password);
 
         if (res?.userId !== null) {
-          this.cookies.set('authtoken', res.authToken);
-          this.cookies.set('userid', res.userId);
-          this.cookies.set('refreshToken', res.refreshToken);
+          this.cookies.setAuthToken(res.authToken);
+          this.cookies.setUserId(res.userId);
+          this.cookies.setRefreshToken(res.refreshToken);
 
           this.router.navigate(['/homepage']);
         }
       } catch (err: any) {
-        if (err.status === 400) this.toast.showInfo(USER_ALERTS.USER_NOT_EXISTS);
+        if (err.status === 400)
+          this.toast.showInfo(USER_ALERTS.USER_NOT_EXISTS);
         if (err.status === 401) this.toast.showInfo(USER_ALERTS.WRONG_PASSWORD);
       }
     }
