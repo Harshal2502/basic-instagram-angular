@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastService } from '../services/toast-service.service';
 import { LoginService } from '../services/loginservice.service';
+import { USER_ALERTS } from '../utils/constants';
 
 @Component({
   selector: 'app-login',
@@ -45,8 +46,8 @@ export class LoginComponent {
           this.router.navigate(['/homepage']);
         }
       } catch (err: any) {
-        if (err.status === 400) this.toast.showInfo('User does not exist');
-        if (err.status === 401) this.toast.showInfo('Wrong Password');
+        if (err.status === 400) this.toast.showInfo(USER_ALERTS.USER_NOT_EXISTS);
+        if (err.status === 401) this.toast.showInfo(USER_ALERTS.WRONG_PASSWORD);
       }
     }
   }

@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../services/loginservice.service';
 import { SignupService } from '../services/signup.service';
 import { OtpService } from '../services/otp.service';
+import { USER_ALERTS } from '../utils/constants';
 
 @Component({
   selector: 'app-signup',
@@ -42,7 +43,7 @@ export class SignupComponent {
 
   async signup() {
     if (!this.validateUsername(this.username)) {
-      this.toast.showInfo('invalid username');
+      this.toast.showInfo(USER_ALERTS.INVALID_USERNAME);
       return;
     } else {
       try {
@@ -50,7 +51,7 @@ export class SignupComponent {
       } catch (err: any) {
         this.toast.showInfo(err.error.message);
         if (err.response.status !== 200) {
-          this.toast.showInfo('Username not available');
+          this.toast.showInfo(USER_ALERTS.USERNAME_NOT_AVAILABLE);
           return;
         }
       }
@@ -61,29 +62,29 @@ export class SignupComponent {
     }
 
     if (this.password !== this.confirmPassword) {
-      this.toast.showInfo('Passwords do not match');
+      this.toast.showInfo(USER_ALERTS.PASSWORD_UPPATED);
       return;
     }
 
     if (this.fullName.length >= 50) {
-      this.toast.showInfo('max length of fullname should be 50');
+      this.toast.showInfo(USER_ALERTS.MAX_LENGTH);
       return;
     }
 
     const fullNamePattern = /^[A-Za-z\s]+$/;
     if (!fullNamePattern.test(this.fullName)) {
-      this.toast.showInfo('Full Name can only contain letters and spaces.');
+      this.toast.showInfo(USER_ALERTS.NO_SPECIAL_CHAR);
       return;
     }
 
     if (this.phoneNumber === '' && this.email === '') {
-      this.toast.showInfo('Phone numer or Email is required');
+      this.toast.showInfo(USER_ALERTS.PHONE_EMAIL_REQUIRED);
       return;
     }
 
     const res = await this.otpService.generateOTP(this.email);
     if (res.sent !== true) {
-      this.toast.showInfo('An error occured');
+      this.toast.showInfo(USER_ALERTS.ERROR);
       return;
     }
 
@@ -92,7 +93,7 @@ export class SignupComponent {
 
   async validateOTP() {
     if (this.otp == '') {
-      this.toast.showInfo('Enter OTP to Proceed');
+      this.toast.showInfo(USER_ALERTS.ENTER_OTP);
       return;
     }
 
@@ -123,11 +124,11 @@ export class SignupComponent {
             }
           } catch (err: any) {
             if (err.status !== 200)
-              this.toast.showInfo('Please login to continue');
+              this.toast.showInfo(USER_ALERTS.LOGIN);
             this.router.navigate(['/login']);
           }
 
-          this.toast.showInfo('Registered Successfully!');
+          this.toast.showInfo(USER_ALERTS.REGISTERED);
           this.router.navigate(['/update-profile']);
 
           return;
@@ -164,7 +165,7 @@ export class SignupComponent {
     if (!isLengthValid)
       this.alertStr += 'more than 8 and less than 30 characters';
 
-    this.toast.showInfo(`Password must contain ${this.alertStr}`);
+    this.toast.showInfo(`${USER_ALERTS.PASSWORD} ${this.alertStr}`);
     return false;
   }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast-service.service';
+import { USER_ALERTS } from '../utils/constants';
 
 @Component({
   selector: 'app-forgot-password',
@@ -38,7 +39,7 @@ export class ForgotPasswordComponent {
     if(this.otp == '')this.err1 = true;
     else if(this.newPassword == '')this.err2 = true;
     else {
-      this.toast.showSuccess("Password udapted successfully!");
+      this.toast.showSuccess(USER_ALERTS.PASSWORD_UPPATED);
       this.router.navigate(['/homepage']);
     }
   }
