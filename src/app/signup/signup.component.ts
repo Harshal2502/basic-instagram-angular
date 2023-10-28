@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api-service.service';
 import { ToastService } from '../services/toast-service.service';
 import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from '../services/loginservice.service';
+import { SignupService } from '../services/signup.service';
+import { OtpService } from '../services/otp.service';
 
 @Component({
   selector: 'app-signup',
@@ -31,7 +34,10 @@ export class SignupComponent {
     private router: Router,
     private API: ApiService,
     private toast: ToastService,
-    private cookies: CookieService
+    private cookies: CookieService,
+    private loginService: LoginService,
+    private signupService: SignupService,
+    private otpService: OtpService
   ) {}
 
   async signup() {
@@ -41,13 +47,8 @@ export class SignupComponent {
     } else {
       try {
         const res = await this.API.validUsername(this.username);
-
-        if (res.status === null) {
-          this.toast.showInfo('Username not available');
-          return;
-        }
       } catch (err: any) {
-        this.toast.showInfo(err.response.data.message);
+        this.toast.showInfo(err.error.message);
         if (err.response.status !== 200) {
           this.toast.showInfo('Username not available');
           return;
@@ -80,7 +81,7 @@ export class SignupComponent {
       return;
     }
 
-    const res = await this.API.generateOTP(this.email);
+    const res = await this.otpService.generateOTP(this.email);
     if (res.status !== 200) {
       this.toast.showInfo('An error occured');
       return;
@@ -96,12 +97,12 @@ export class SignupComponent {
     }
 
     try {
-      const res = await this.API.validateOTP(this.email, this.otp);
+      const res = await this.otpService.validateOTP(this.email, this.otp);
 
       if (res.status === 200) {
         const transactionId = res.data.transactionId;
 
-        const res1 = await this.API.signup(
+        const res1 = await this.signupService.signup(
           this.username,
           this.password,
           this.email,
@@ -110,7 +111,7 @@ export class SignupComponent {
 
         if (res1.status === 201) {
           try {
-            const res = await this.API.login(this.username, this.password);
+            const res = await this.loginService.login(this.username, this.password);
 
             if (res?.userId !== null) {
               this.cookies.set('authtoken', res.authToken);

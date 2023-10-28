@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../services/api-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastService } from '../services/toast-service.service';
+import { LoginService } from '../services/loginservice.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private API: ApiService,
+    private loginService: LoginService,
     private cookies: CookieService,
     private toast: ToastService
   ) {}
@@ -35,7 +35,7 @@ export class LoginComponent {
 
     if (this.username != '' && this.password != '') {
       try {
-        const res = await this.API.login(this.username, this.password);
+        const res = await this.loginService.login(this.username, this.password);
 
         if (res?.userId !== null) {
           this.cookies.set('authtoken', res.authToken);
