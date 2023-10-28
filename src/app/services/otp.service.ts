@@ -15,13 +15,7 @@ export class OtpService {
       const otpRequest = new OtpRequest(contactInfo, 'EMAIL_OTP', otp);
 
       const response = await this.http
-        .post(API_ROUTES.VALIDATE_OTP, {
-          contactInfo: {
-            email: email,
-          },
-          requestType: 'EMAIL_OTP',
-          otp: otp,
-        })
+        .post(API_ROUTES.VALIDATE_OTP, otpRequest)
         .toPromise();
       return response;
     } catch (error) {
@@ -35,12 +29,7 @@ export class OtpService {
       const otpRequest = new OtpRequest(contactInfo, 'EMAIL_OTP');
 
       const response = await this.http
-        .post(API_ROUTES.GENERATE_OTP, {
-          contactInfo: {
-            email: email,
-          },
-          requestType: 'EMAIL_OTP',
-        })
+        .post(API_ROUTES.GENERATE_OTP, otpRequest)
         .toPromise();
       return response;
     } catch (error) {

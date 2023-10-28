@@ -41,20 +41,66 @@ export class SignupComponent {
     private otpService: OtpService
   ) {}
 
+  async validUsername() {
+    try {
+      const res = await this.API.validUsername(this.username);
+    } catch (err: any) {
+      this.toast.showInfo(err.error.message);
+      if (err.response.status !== 200) {
+        this.toast.showInfo(USER_ALERTS.USERNAME_NOT_AVAILABLE);
+        return;
+      }
+    }
+  }
+
+  async generateOtp() {
+    const res = await this.otpService.generateOTP(this.email);
+    if (res.sent !== true) {
+      this.toast.showInfo(USER_ALERTS.ERROR);
+      return;
+    }
+  }
+
+  async signupAfterOtp(transactionId: any) {
+    try {
+      const res1 = await this.signupService.signup(
+        this.username,
+        this.password,
+        this.email,
+        transactionId
+      );
+
+      this.login();
+      this.toast.showInfo(USER_ALERTS.REGISTERED);
+      this.router.navigate(['/update-profile']);
+
+      return;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async login() {
+    try {
+      const res = await this.loginService.login(this.username, this.password);
+
+      if (res?.userId !== null) {
+        this.cookies.set('authtoken', res.authToken);
+        this.cookies.set('userid', res.userId);
+        this.cookies.set('refreshToken', res.refreshToken);
+      }
+    } catch (err: any) {
+      if (err.status !== 200) this.toast.showInfo(USER_ALERTS.LOGIN);
+      this.router.navigate(['/login']);
+    }
+  }
+
   async signup() {
     if (!this.validateUsername(this.username)) {
       this.toast.showInfo(USER_ALERTS.INVALID_USERNAME);
       return;
     } else {
-      try {
-        const res = await this.API.validUsername(this.username);
-      } catch (err: any) {
-        this.toast.showInfo(err.error.message);
-        if (err.response.status !== 200) {
-          this.toast.showInfo(USER_ALERTS.USERNAME_NOT_AVAILABLE);
-          return;
-        }
-      }
+      this.validUsername();
     }
 
     if (!this.validatePassword(this.password)) {
@@ -82,13 +128,8 @@ export class SignupComponent {
       return;
     }
 
-    const res = await this.otpService.generateOTP(this.email);
-    if (res.sent !== true) {
-      this.toast.showInfo(USER_ALERTS.ERROR);
-      return;
-    }
-
-    this.otpBool = !this.otpBool;
+    this.generateOtp();
+    this.otpBool = true;
   }
 
   async validateOTP() {
@@ -99,45 +140,10 @@ export class SignupComponent {
 
     try {
       const res = await this.otpService.validateOTP(this.email, this.otp);
-
       if (res.transactionId !== null) {
-        const transactionId = res.transactionId;
-
-        try {
-          const res1 = await this.signupService.signup(
-            this.username,
-            this.password,
-            this.email,
-            transactionId
-          );
-
-          try {
-            const res = await this.loginService.login(
-              this.username,
-              this.password
-            );
-
-            if (res?.userId !== null) {
-              this.cookies.set('authtoken', res.authToken);
-              this.cookies.set('userid', res.userId);
-              this.cookies.set('refreshToken', res.refreshToken);
-            }
-          } catch (err: any) {
-            if (err.status !== 200)
-              this.toast.showInfo(USER_ALERTS.LOGIN);
-            this.router.navigate(['/login']);
-          }
-
-          this.toast.showInfo(USER_ALERTS.REGISTERED);
-          this.router.navigate(['/update-profile']);
-
-          return;
-        } catch (err) {
-          console.log(err);
-        }
+        this.signupAfterOtp(res?.transactionId);
       }
     } catch (err: any) {
-      console.log(err);
       this.toast.showInfo(err.error);
     }
   }

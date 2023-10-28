@@ -23,16 +23,7 @@ export class SignupService {
       );
 
       const response = await this.http
-        .post(API_ROUTES.SIGNUP, {
-          loginInfo: {
-            username: username,
-            password: password,
-          },
-          contactInfo: {
-            email: email,
-          },
-          transactionId: transactionId,
-        })
+        .post(API_ROUTES.SIGNUP, signupData)
         .toPromise();
       return response;
     } catch (error) {

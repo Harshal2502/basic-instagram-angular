@@ -9,7 +9,7 @@ export class LoginInfo {
 export class SignupData {
   constructor(
     public loginInfo: LoginInfo,
-    public conactInfo: ContactInfo,
+    public contactInfo: ContactInfo,
     public transactionId: any
   ) {}
 }
