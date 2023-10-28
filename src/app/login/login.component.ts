@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../services/api-service.service';
 import { CookieService } from 'ngx-cookie-service';
-import { ToastService } from '../toast-service.service';
+import { ToastService } from '../services/toast-service.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +34,6 @@ export class LoginComponent {
     }
 
     if (this.username != '' && this.password != '') {
-
       try {
         const res = await this.API.login(this.username, this.password);
 
@@ -45,7 +44,6 @@ export class LoginComponent {
 
           this.router.navigate(['/homepage']);
         }
-
       } catch (err: any) {
         if (err.status === 400) this.toast.showInfo('User does not exist');
         if (err.status === 401) this.toast.showInfo('Wrong Password');

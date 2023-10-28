@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
 import { Router } from '@angular/router';
-import { ToastService } from '../toast-service.service';
+import { ToastService } from '../services/toast-service.service';
 
 @Component({
   selector: 'app-forgot-password',

@@ -6,11 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./update-profile.component.css']
 })
 export class UpdateProfileComponent {
-  bio: string = '';
-
-  updateProfile() {
-  }
-
-  skip() {
-  }
+  
 }

@@ -1,7 +1,7 @@
 <div class="main">
   <div class="update-profile-container">
     <h2>Update Profile Data</h2>
-    <form (submit)="updateProfile()">
+    <form>
       <div class="form-group">
         <label for="profilePicture">Profile Picture:</label>
         <input type="file" id="profilePicture" name="profilePicture" />
@@ -12,7 +12,6 @@
         <textarea
           id="bio"
           name="bio"
-          [(ngModel)]="bio"
           rows="4"
           maxlength="200"
         ></textarea>
