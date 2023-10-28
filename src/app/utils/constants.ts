@@ -8,3 +8,7 @@ export const API_ROUTES = {
         VALIDATE_OTP: BASEAPI_PATH + "/otp/validate",
         SIGNUP: BASEAPI_PATH + "/users/signup"
 }
+
+export const USER_ALERTS = {
+        
+}

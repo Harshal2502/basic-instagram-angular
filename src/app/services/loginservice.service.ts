@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import { API_ROUTES } from '../utils/constants';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { LoginInfo } from '../model/API-data.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   async login(username: string, password: string): Promise<any> {
     try {
-      const requestBody = {
-        username: username,
-        password: password,
-      };
+      const loginData = new LoginInfo(username, password);
 
-      return this.httpClient.post(API_ROUTES.LOGIN, requestBody).toPromise();
+      const response = await this.http
+        .post(API_ROUTES.LOGIN, loginData)
+        .toPromise();
+      return response;
     } catch (error) {
       throw error;
     }
   }
-
 }

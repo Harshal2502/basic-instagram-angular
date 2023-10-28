@@ -82,7 +82,7 @@ export class SignupComponent {
     }
 
     const res = await this.otpService.generateOTP(this.email);
-    if (res.status !== 200) {
+    if (res.sent !== true) {
       this.toast.showInfo('An error occured');
       return;
     }
@@ -99,26 +99,27 @@ export class SignupComponent {
     try {
       const res = await this.otpService.validateOTP(this.email, this.otp);
 
-      if (res.status === 200) {
-        const transactionId = res.data.transactionId;
+      if (res.transactionId !== null) {
+        const transactionId = res.transactionId;
 
-        const res1 = await this.signupService.signup(
-          this.username,
-          this.password,
-          this.email,
-          transactionId
-        );
+        try {
+          const res1 = await this.signupService.signup(
+            this.username,
+            this.password,
+            this.email,
+            transactionId
+          );
 
-        if (res1.status === 201) {
           try {
-            const res = await this.loginService.login(this.username, this.password);
+            const res = await this.loginService.login(
+              this.username,
+              this.password
+            );
 
             if (res?.userId !== null) {
               this.cookies.set('authtoken', res.authToken);
               this.cookies.set('userid', res.userId);
               this.cookies.set('refreshToken', res.refreshToken);
-
-              this.router.navigate(['/homepage']);
             }
           } catch (err: any) {
             if (err.status !== 200)
@@ -128,11 +129,15 @@ export class SignupComponent {
 
           this.toast.showInfo('Registered Successfully!');
           this.router.navigate(['/update-profile']);
+
           return;
+        } catch (err) {
+          console.log(err);
         }
       }
     } catch (err: any) {
-      this.toast.showInfo(err.response.data);
+      console.log(err);
+      this.toast.showInfo(err.error);
     }
   }
 
