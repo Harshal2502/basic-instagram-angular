@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { PostComponent } from './post/post.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service'; 
 import { ToastrModule } from 'ngx-toastr';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +26,12 @@ import { ToastrModule } from 'ngx-toastr';
     UpdateProfileComponent,
     ForgotPasswordComponent,
     HomepageComponent,
-    PostComponent
+    PostComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,

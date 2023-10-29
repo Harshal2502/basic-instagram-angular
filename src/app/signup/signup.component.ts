@@ -100,7 +100,7 @@ export class SignupComponent {
       this.toast.showInfo(USER_ALERTS.INVALID_USERNAME);
       return;
     } else {
-      this.validUsername();
+      await this.validUsername();
     }
 
     if (!this.validatePassword(this.password)) {
@@ -108,7 +108,7 @@ export class SignupComponent {
     }
 
     if (this.password !== this.confirmPassword) {
-      this.toast.showInfo(USER_ALERTS.PASSWORD_UPPATED);
+      this.toast.showInfo(USER_ALERTS.UNMATCHING_PASSWORDS);
       return;
     }
 
