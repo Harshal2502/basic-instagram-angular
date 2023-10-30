@@ -1,80 +1,74 @@
 <div class="main">
-
-  
   <div class="signup-container">
-  <h2>Signup</h2>
-  <form (submit)="signup()">
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input
-      type="text"
-      id="username"
-      name="username"
-      [(ngModel)]="username"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="password"
-        required
-        (input)="calculatePasswordStrength($event)"
+    <h2>Signup</h2>
+    <form (submit)="!otpBool ? signup() : validateOTP()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          required
         />
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label for="confirmPassword">Confirm Password:</label>
-      <input
-      type="password"
-      id="confirmPassword"
-      name="confirmPassword"
-      [(ngModel)]="confirmPassword"
-      required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="fullName">Full Name:</label>
-      <input
-      type="text"
-      id="fullName"
-      name="fullName"
-      [(ngModel)]="fullName"
-      maxlength="50"
-      required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="phoneNumber">Phone Number:</label>
-      <input
-        type="text"
-        id="phoneNumber"
-        name="phoneNumber"
-        [(ngModel)]="phoneNumber"
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          (input)="calculatePasswordStrength($event)"
         />
-    </div>
+      </div>
 
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" [(ngModel)]="email" />
-    </div>
-    
-    <button type="submit">Register</button>
-  </form>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          required
+        />
+      </div>
 
-  <div class="password-strength">
-    Password Strength:
-    <div
-      class="strength-bar"
-      [ngStyle]="{ width: score+1 + '%' }"
-      ></div>
+      <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          [(ngModel)]="fullName"
+          maxlength="50"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" />
+      </div>
+
+      <div class="form-group" *ngIf="otpBool">
+        <label for="phoneNumber">Enter OTP</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          name="phoneNumber"
+          [(ngModel)]="otp"
+        />
+      </div>
+
+      <button type="submit">{{ otpBool ? "Enter OTP" : "Register" }}</button>
+    </form>
+
+    <div class="password-strength">
+      Password Strength:
+      <div class="strength-bar" [ngStyle]="{ width: score + 1 + '%' }"></div>
     </div>
   </div>
-
 </div>

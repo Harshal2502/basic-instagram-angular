@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +13,10 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PostComponent } from './post/post.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service'; 
+import { ToastrModule } from 'ngx-toastr';
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +26,23 @@ import { PostComponent } from './post/post.component';
     UpdateProfileComponent,
     ForgotPasswordComponent,
     HomepageComponent,
-    PostComponent
+    PostComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
+    NgbModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
